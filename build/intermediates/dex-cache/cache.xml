@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/libs/internal_impl-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1609e6d42d0480b0f4188e2c29f75388fa12a8f0">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-f6805de184c653d28122e2608d73c74dd6d5ef14.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="efeda77c808750cb670ee9c48d8a1835d89dbcb2">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-fb56cd0534b5010065c87ecdd063ce37d39fac82.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="95482e7c792a7c0d5a9d5461e97726bd54fe9549">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-1f5de8a7933e4689b2fbfd5c61a9efa325b69d1e.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/exploded-aar/com.google.android.support/wearable/1.1.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="27f19641b81b1078e653d2f0e5d1ed44d158a785">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-4484fa02acfdc1741ca4a679528c46a836ccfbda.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.0/support-annotations-21.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="1a578b9607b36266c63d43a4fa0ab5664dbe911e">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-00144de65b8bfd5026783b176ba464da2fbf7970.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/pre-dexed/debug/internal_impl-21.0.3-9eb3fd882ad4173f8770179f9029baae1ff9c5ce.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="686344a780033e4ba22b926cd225f8d4941247e6">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-69248a457fd460f3ac04ef539a4d6a633a97eb1d.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/pre-dexed/debug/classes-6a66c4b67096147e200377f80c37d46ba74dcc95.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/exploded-aar/com.google.android.gms/play-services/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="dd9247ea0fabe8ee479638c4b4a23e93752be256">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/pre-dexed/debug/classes-57316980fdc943d143faf8e451cce5498cb0b7a4.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/pre-dexed/debug/support-annotations-21.0.3-3eddce747d96b6489d93c4bb8e5df067bd8aef1b.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/mobile/build/intermediates/pre-dexed/debug/classes-ba1556dd5371cee89d70a63eca094ee6e46dbbcb.jar" />
+    </item>
+    <item
+        jar="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/exploded-aar/com.google.android.gms/play-services-wearable/6.5.87/classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="6384c6cd674a22610b932d9464aa6938d067f285">
+        <dex dex="/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-57741215d9863d73a5b7cf9829775858b30a79ae.jar" />
+    </item>
+
+</items>
