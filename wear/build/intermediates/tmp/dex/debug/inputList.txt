@@ -1,8 +1,0 @@
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/classes/debug
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/support-annotations-21.0.0-00144de65b8bfd5026783b176ba464da2fbf7970.jar
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-57741215d9863d73a5b7cf9829775858b30a79ae.jar
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/internal_impl-21.0.0-f6805de184c653d28122e2608d73c74dd6d5ef14.jar
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-4484fa02acfdc1741ca4a679528c46a836ccfbda.jar
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-fb56cd0534b5010065c87ecdd063ce37d39fac82.jar
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-69248a457fd460f3ac04ef539a4d6a633a97eb1d.jar
-/Users/juandesi/Workspace/AndroidStudio/WearTheRobot/wear/build/intermediates/pre-dexed/debug/classes-1f5de8a7933e4689b2fbfd5c61a9efa325b69d1e.jar
