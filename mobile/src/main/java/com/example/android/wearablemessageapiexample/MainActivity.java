@@ -35,7 +35,19 @@ import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 public class MainActivity extends Activity {
+    private static final String URL = "http://hackaton.cloudhub.io/addMovement?name=Kick_Left";
     private final String COMMAND_PATH = "/command";
 
     private GoogleApiClient apiClient;
@@ -60,12 +72,47 @@ public class MainActivity extends Activity {
             public void onMessageReceived(MessageEvent messageEvent) {
                 if (messageEvent.getPath().equals(COMMAND_PATH)) {
                     tuvieja = new String(messageEvent.getData());
-                    
+                    HttpClient httpclient = new DefaultHttpClient();
+                    HttpResponse response = null;
+                    try {
+                        response = httpclient.execute(new HttpGet(URL));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    StatusLine statusLine = response.getStatusLine();
+                    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+                        try {
+                            response.getEntity().writeTo(out);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        String responseString = out.toString();
+                        try {
+                            out.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        //..more logic
+                    } else{
+                        //Closes the connection.
+                        try {
+                            response.getEntity().getContent().close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        try {
+                            throw new IOException(statusLine.getReasonPhrase());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                 }
             }
         };
 
+        text.setText("Paso");
 
         // Create GoogleApiClient
         apiClient = new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
