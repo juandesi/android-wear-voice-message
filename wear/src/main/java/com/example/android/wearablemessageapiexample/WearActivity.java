@@ -23,105 +23,63 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.wearable.activity.ConfirmationActivity;
 import android.view.View;
-import android.widget.EditText;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.MessageApi;
-import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Node;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
-import java.util.Stack;
-
 public class WearActivity extends Activity {
-    private final String MESSAGE1_PATH = "/command";
+    private final String COMMAND_PATH = "/command";
 
     private GoogleApiClient apiClient;
-    private View message1Button;
-    private View message2Button;
-    private NodeApi.NodeListener nodeListener;
-    private MessageApi.MessageListener messageListener;
+    private View punchButton;
     private String remoteNodeId;
-    private Handler handler;
     private String command;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        command = "lala";
-        handler = new Handler();
 
-        message1Button = findViewById(R.id.message1Button);
-        message2Button = findViewById(R.id.message2Button);
+        command = getCommand();
 
-        // Set message1Button onClickListener to send message 1
-        message1Button.setOnClickListener(new View.OnClickListener() {
+        punchButton = findViewById(R.id.punchButton);
+
+        // Set the button onClickListener to send the message
+        punchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, MESSAGE1_PATH, command.getBytes()).setResultCallback(new ResultCallback<MessageApi.SendMessageResult>() {
-                    @Override
-                    public void onResult(MessageApi.SendMessageResult sendMessageResult) {
-
-                    }
-                });
+                Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, command.getBytes());
             }
         });
 
+        apiClient = apiClientFactory();
+    }
 
-        // Create NodeListener that enables buttons when a node is connected and disables buttons when a node is disconnected
-        nodeListener = new NodeApi.NodeListener() {
-            @Override
-            public void onPeerConnected(Node node) {
-                remoteNodeId = node.getId();
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        message1Button.setEnabled(true);
-                        message2Button.setEnabled(true);
-                    }
-                });
-                Intent intent = new Intent(getApplicationContext(), ConfirmationActivity.class);
-                intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.SUCCESS_ANIMATION);
-                intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE, getString(R.string.peer_connected));
-                startActivity(intent);
-            }
+    // Returns the command using the voice input
+    private String getCommand() {
+        return "Left_Kick";
+    }
 
-            @Override
-            public void onPeerDisconnected(Node node) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        message1Button.setEnabled(false);
-                        message2Button.setEnabled(false);
-                    }
-                });
-                Intent intent = new Intent(getApplicationContext(), ConfirmationActivity.class);
-                intent.putExtra(ConfirmationActivity.EXTRA_ANIMATION_TYPE, ConfirmationActivity.FAILURE_ANIMATION);
-                intent.putExtra(ConfirmationActivity.EXTRA_MESSAGE, getString(R.string.peer_disconnected));
-                startActivity(intent);
-            }
-        };
-
-        // Create GoogleApiClient
-        apiClient = new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+    // Create GoogleApiClient
+    private GoogleApiClient apiClientFactory() {
+        return new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
             public void onConnected(Bundle bundle) {
                 // Register Node and Message listeners
-                Wearable.NodeApi.addListener(apiClient, nodeListener);
-                Wearable.MessageApi.addListener(apiClient, messageListener);
+                Wearable.NodeApi.addListener(apiClient, null);
                 // If there is a connected node, get it's id that is used when sending messages
                 Wearable.NodeApi.getConnectedNodes(apiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
                     @Override
                     public void onResult(NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
                         if (getConnectedNodesResult.getStatus().isSuccess() && getConnectedNodesResult.getNodes().size() > 0) {
                             remoteNodeId = getConnectedNodesResult.getNodes().get(0).getId();
-                            message1Button.setEnabled(true);
-                            message2Button.setEnabled(true);
+                            punchButton.setEnabled(true);
                         }
                     }
                 });
@@ -129,8 +87,7 @@ public class WearActivity extends Activity {
 
             @Override
             public void onConnectionSuspended(int i) {
-                message1Button.setEnabled(false);
-                message2Button.setEnabled(false);
+                punchButton.setEnabled(false);
             }
         }).addApi(Wearable.API).build();
     }
@@ -158,11 +115,9 @@ public class WearActivity extends Activity {
     @Override
     protected void onPause() {
         // Unregister Node and Message listeners, disconnect GoogleApiClient and disable buttons
-        Wearable.NodeApi.removeListener(apiClient, nodeListener);
-        Wearable.MessageApi.removeListener(apiClient, messageListener);
+        Wearable.NodeApi.removeListener(apiClient, null);
         apiClient.disconnect();
-        message1Button.setEnabled(false);
-        message2Button.setEnabled(false);
+        punchButton.setEnabled(false);
         super.onPause();
     }
 }

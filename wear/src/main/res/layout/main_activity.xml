@@ -21,19 +21,11 @@
     android:orientation="horizontal">
 
     <Button
-        android:id="@+id/message1Button"
+        android:id="@+id/punchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/send_message1"
         android:layout_gravity="center" />
-
-    <Button
-        android:id="@+id/message2Button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:enabled="false"
-        android:text="@string/send_message2"
-        android:layout_gravity="center_vertical" />
 
 </LinearLayout>

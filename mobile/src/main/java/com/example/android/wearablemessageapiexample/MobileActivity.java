@@ -51,7 +51,6 @@ public class MobileActivity extends Activity {
     private final String COMMAND_PATH = "/command";
 
     private GoogleApiClient apiClient;
-    private NodeApi.NodeListener nodeListener;
     private MessageApi.MessageListener messageListener;
     private String command;
 
@@ -60,47 +59,9 @@ public class MobileActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        // Create MessageListener that receives messages sent from a wearable
-        messageListener = new MessageApi.MessageListener() {
-            @Override
-            public void onMessageReceived(MessageEvent messageEvent) {
-                if (messageEvent.getPath().equals(COMMAND_PATH)) {
+        messageListener = messageListenerFactory();
 
-                    command = new String(messageEvent.getData());
-
-
-                    HttpClient httpclient = new DefaultHttpClient();
-
-                    try {
-                        httpclient.execute(new HttpGet());
-                    }catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            }
-        };
-
-        // Create GoogleApiClient
-        apiClient = new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
-            @Override
-            public void onConnected(Bundle bundle) {
-                // Register Node and Message listeners
-                Wearable.NodeApi.addListener(apiClient, nodeListener);
-                Wearable.MessageApi.addListener(apiClient, messageListener);
-                // If there is a connected node, get it's id that is used when sending messages
-            }
-
-            @Override
-            public void onConnectionSuspended(int i) {
-            }
-        }).addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(ConnectionResult connectionResult) {
-                if (connectionResult.getErrorCode() == ConnectionResult.API_UNAVAILABLE)
-                    Toast.makeText(getApplicationContext(), getString(R.string.wearable_api_unavailable), Toast.LENGTH_LONG).show();
-            }
-        }).addApi(Wearable.API).build();
+        apiClient = apiClientFactory();
     }
 
     @Override
@@ -126,9 +87,52 @@ public class MobileActivity extends Activity {
     @Override
     protected void onPause() {
         // Unregister Node and Message listeners, disconnect GoogleApiClient and disable buttons
-        Wearable.NodeApi.removeListener(apiClient, nodeListener);
+        Wearable.NodeApi.removeListener(apiClient, null);
         Wearable.MessageApi.removeListener(apiClient, messageListener);
         apiClient.disconnect();
         super.onPause();
+    }
+
+    // Create MessageListener that receives messages sent from a wearable
+    private MessageApi.MessageListener messageListenerFactory(){
+        return new MessageApi.MessageListener() {
+            @Override
+            public void onMessageReceived(MessageEvent messageEvent) {
+                if (messageEvent.getPath().equals(COMMAND_PATH)) {
+
+                    command = new String(messageEvent.getData());
+                    HttpClient httpclient = new DefaultHttpClient();
+
+                    try {
+                        httpclient.execute(new HttpGet(BASE_URL + command));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        };
+    }
+
+    // Create GoogleApiClient
+    private GoogleApiClient apiClientFactory(){
+        return new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
+            @Override
+            public void onConnected(Bundle bundle) {
+                // Register Node and Message listeners
+                Wearable.NodeApi.addListener(apiClient, null);
+                Wearable.MessageApi.addListener(apiClient, messageListener);
+                // If there is a connected node, get it's id that is used when sending messages
+            }
+
+            @Override
+            public void onConnectionSuspended(int i) {
+            }
+        }).addOnConnectionFailedListener(new GoogleApiClient.OnConnectionFailedListener() {
+            @Override
+            public void onConnectionFailed(ConnectionResult connectionResult) {
+                if (connectionResult.getErrorCode() == ConnectionResult.API_UNAVAILABLE)
+                    Toast.makeText(getApplicationContext(), getString(R.string.wearable_api_unavailable), Toast.LENGTH_LONG).show();
+            }
+        }).addApi(Wearable.API).build();
     }
 }
