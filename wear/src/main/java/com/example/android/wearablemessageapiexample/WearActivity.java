@@ -27,6 +27,7 @@ import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -42,14 +43,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WearActivity extends Activity {
+
+    private final String RIGHT_SPIN_MOVE = "Right_Turn(2)";
+    private final String LEFT_SPIN_MOVE = "Left_Turn(2)";
+    private final String WALK_MOVE = "Advance";
+
     private final String COMMAND_PATH = "/command";
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
 
     private GoogleApiClient apiClient;
     private String remoteNodeId;
-    private String command;
     private EditText metTextHint;
-    private Button mbtSpeak;
+    private ImageButton mbtSpeak, mbtRight, mbtLeft, mbtWalk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,26 +62,22 @@ public class WearActivity extends Activity {
         setContentView(R.layout.main_activity);
 
         metTextHint = (EditText) findViewById(R.id.etTextHint);
-        mbtSpeak = (Button) findViewById(R.id.btSpeak);
+        mbtSpeak = (ImageButton) findViewById(R.id.btSpeak);
+        mbtLeft = (ImageButton) findViewById(R.id.btLeftSpin);
+        mbtRight = (ImageButton) findViewById(R.id.btRightSpin);
+        mbtWalk = (ImageButton) findViewById(R.id.btWalk);
+
         apiClient = apiClientFactory();
         checkVoiceRecognition();
-    }
-
-    // Returns the command using the voice input
-    private String getCommand() {
-        return "Left_Kick";
     }
 
     public void checkVoiceRecognition() {
         // Check if voice recognition is present
         PackageManager pm = getPackageManager();
-        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(
-                RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
+        List<ResolveInfo> activities = pm.queryIntentActivities(new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0);
         if (activities.size() == 0) {
             mbtSpeak.setEnabled(false);
-            mbtSpeak.setText("Voice recognizer not present");
-            Toast.makeText(this, "Voice recognizer not present",
-                    Toast.LENGTH_SHORT).show();
+            showToastMessage("Voice recognizer not present");
         }
     }
 
@@ -103,6 +104,18 @@ public class WearActivity extends Activity {
         intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
         //Start the Voice recognizer activity for the result.
         startActivityForResult(intent, VOICE_RECOGNITION_REQUEST_CODE);
+    }
+
+    public void rightSpinMove(View view) {
+        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, RIGHT_SPIN_MOVE.getBytes());
+    }
+
+    public void leftSpinMove(View view) {
+        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, LEFT_SPIN_MOVE.getBytes());
+    }
+
+    public void walkMove(View view) {
+        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, WALK_MOVE.getBytes());
     }
 
     @Override
@@ -142,6 +155,8 @@ public class WearActivity extends Activity {
     void showToastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
+
+
 
     @Override
     protected void onResume() {

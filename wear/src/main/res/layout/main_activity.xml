@@ -15,9 +15,10 @@
 -->
 
 
-<RelativeLayout
-    android:layout_width="fill_parent"
+<FrameLayout
+    android:layout_width="match_parent"
     android:layout_height="fill_parent"
+    android:background="@color/white"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -25,22 +26,80 @@
         android:id="@+id/btSpeak"
         android:layout_height="wrap_content"
         android:onClick="speak"
-        android:text="@string/btSpeak"
+        android:background="@drawable/punch"
         android:layout_width="wrap_content"
-        android:layout_above="@+id/etTextHint"
-        android:layout_centerHorizontal="true"
-        tools:context=".VoiceRecognitionActivity" />
-
-    <EditText
-        android:id="@+id/etTextHint"
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:lines="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/etSearchHint"
+        tools:context=".VoiceRecognitionActivity"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="69dp" />
-</RelativeLayout>
+        android:layout_marginBottom="27dp"
+        android:layout_row="3"
+        android:layout_column="1"
+        android:layout_gravity="center_horizontal|bottom" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="right|center_vertical">
+
+        <Button
+            android:layout_width="34dp"
+            android:layout_height="28dp"
+            android:background="@drawable/walk"
+            android:id="@+id/btWalk"
+            android:onClick="walkMove"
+            android:width="24dp"
+            android:height="24dp"
+            android:layout_row="1"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="27dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="left|center_vertical"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+
+        <Button
+            android:layout_width="41dp"
+            android:layout_height="34dp"
+            android:background="@drawable/left"
+            android:id="@+id/btLeftSpin"
+            android:onClick="leftSpinMove"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:layout_gravity="left|center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="24dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/btLeftSpin">
+
+        <Button
+            android:layout_width="36dp"
+            android:layout_height="33dp"
+            android:background="@drawable/right"
+            android:id="@+id/btRightSpin"
+            android:onClick="rightSpinMove"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:layout_gravity="right|center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp" />
+    </RelativeLayout>
+
+
+</FrameLayout>
 
