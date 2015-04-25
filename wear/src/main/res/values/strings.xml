@@ -15,14 +15,11 @@
   -->
 
 <resources>
-    <string name="app_name">Wearable Message Api Example</string>
-    <string name="received_message1">Message 1.</string>
-    <string name="received_message2">Message 2.</string>
-    <string name="received_messages">Received messages:</string>
-    <string name="send_message1">Punch</string>
-    <string name="send_message2">Kick</string>
-    <string name="error_message1">Error sending message 1.</string>
-    <string name="error_message2">Error sending message 2.</string>
-    <string name="peer_connected">Peer connected.</string>
-    <string name="peer_disconnected">Peer disconnected.</string>
+    <string name="app_name">VoiceRecognitionExample</string>
+    <string name="btSpeak">Speak</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_voice_recognition">Voice Recognition</string>
+    <string name="tvTextMatches">Text Matches</string>
+    <string name="sNoOfMatches">No of Matches</string>
+    <string name="etSearchHint">Speech hint here</string>
 </resources>
