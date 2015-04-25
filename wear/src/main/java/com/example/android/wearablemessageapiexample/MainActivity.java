@@ -107,21 +107,6 @@ public class MainActivity extends Activity {
             }
         };
 
-//        // Create MessageListener that receives messages sent from a mobile
-//        messageListener = new MessageApi.MessageListener() {
-//            @Override
-//            public void onMessageReceived(MessageEvent messageEvent) {
-//                if (messageEvent.getPath().equals(MESSAGE1_PATH)) {
-//                    handler.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            receivedMessagesEditText.append("\n" + getString(R.string.received_message1));
-//                        }
-//                    });
-//                }
-//            }
-//        };
-
         // Create GoogleApiClient
         apiClient = new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override

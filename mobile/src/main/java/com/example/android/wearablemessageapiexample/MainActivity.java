@@ -76,43 +76,24 @@ public class MainActivity extends Activity {
                     HttpResponse response = null;
                     try {
                         response = httpclient.execute(new HttpGet(URL));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
                     StatusLine statusLine = response.getStatusLine();
                     if(statusLine.getStatusCode() == HttpStatus.SC_OK){
                         ByteArrayOutputStream out = new ByteArrayOutputStream();
-                        try {
                             response.getEntity().writeTo(out);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        String responseString = out.toString();
-                        try {
                             out.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                         //..more logic
                     } else{
                         //Closes the connection.
-                        try {
                             response.getEntity().getContent().close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        try {
                             throw new IOException(statusLine.getReasonPhrase());
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
+                    }catch (IOException e) {
+                        e.printStackTrace();
                     }
 
                 }
             }
         };
-
-        text.setText("Paso");
 
         // Create GoogleApiClient
         apiClient = new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
@@ -122,16 +103,6 @@ public class MainActivity extends Activity {
                 Wearable.NodeApi.addListener(apiClient, nodeListener);
                 Wearable.MessageApi.addListener(apiClient, messageListener);
                 // If there is a connected node, get it's id that is used when sending messages
-                Wearable.NodeApi.getConnectedNodes(apiClient).setResultCallback(new ResultCallback<NodeApi.GetConnectedNodesResult>() {
-                    @Override
-                    public void onResult(NodeApi.GetConnectedNodesResult getConnectedNodesResult) {
-                        if (getConnectedNodesResult.getStatus().isSuccess() && getConnectedNodesResult.getNodes().size() > 0) {
-//                            remoteNodeId = getConnectedNodesResult.getNodes().get(0).getId();
-//                            message1Button.setEnabled(true);
-//                            message2Button.setEnabled(true);
-                        }
-                    }
-                });
             }
 
             @Override
