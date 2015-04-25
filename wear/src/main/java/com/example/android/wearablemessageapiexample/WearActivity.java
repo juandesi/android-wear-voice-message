@@ -116,18 +116,10 @@ public class WearActivity extends Activity {
                 if (!textMatchList.isEmpty()) {
                     // If first Match contains the 'search' word
                     // Then start web search.
-                    if (textMatchList.get(0).contains("search")) {
-                        String searchQuery = textMatchList.get(0);
 
+                        String searchQuery = textMatchList.get(0);
                         Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, searchQuery.getBytes());
 
-                        searchQuery = searchQuery.replace("search","");
-                        Intent search = new Intent(Intent.ACTION_WEB_SEARCH);
-                        search.putExtra(SearchManager.QUERY, searchQuery);
-                        startActivity(search);
-
-                        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, command.getBytes());
-                    }
 
                 }
                 //Result code for various error.
