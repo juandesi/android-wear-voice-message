@@ -36,6 +36,8 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.wearable.NodeApi;
 import com.google.android.gms.wearable.Wearable;
 
+import org.codehaus.plexus.util.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -105,35 +107,32 @@ public class WearActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //If Voice recognition is successful then it returns RESULT_OK
         if (requestCode == VOICE_RECOGNITION_REQUEST_CODE)
+        {
+            if (resultCode == RESULT_OK) {
 
-            //If Voice recognition is successful then it returns RESULT_OK
-            if(resultCode == RESULT_OK) {
+                ArrayList<String> textMatchList = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
 
-                ArrayList<String> textMatchList = data
-                        .getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-
-                if (!textMatchList.isEmpty()) {
-                    // If first Match contains the 'search' word
-                    // Then start web search.
-
-                        String searchQuery = textMatchList.get(0);
-                        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, searchQuery.getBytes());
-
-
-                }
-                //Result code for various error.
-            }else if(resultCode == RecognizerIntent.RESULT_AUDIO_ERROR){
+            if (!textMatchList.isEmpty()) {
+                String voiceMessage = StringUtils.join(textMatchList.iterator(), "#");
+                Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, voiceMessage.getBytes());
+            }
+            //Result code for various error.
+            } else if (resultCode == RecognizerIntent.RESULT_AUDIO_ERROR) {
                 showToastMessage("Audio Error");
-            }else if(resultCode == RecognizerIntent.RESULT_CLIENT_ERROR){
+            } else if (resultCode == RecognizerIntent.RESULT_CLIENT_ERROR) {
                 showToastMessage("Client Error");
-            }else if(resultCode == RecognizerIntent.RESULT_NETWORK_ERROR){
+            } else if (resultCode == RecognizerIntent.RESULT_NETWORK_ERROR) {
                 showToastMessage("Network Error");
-            }else if(resultCode == RecognizerIntent.RESULT_NO_MATCH){
+            } else if (resultCode == RecognizerIntent.RESULT_NO_MATCH) {
                 showToastMessage("No Match");
-            }else if(resultCode == RecognizerIntent.RESULT_SERVER_ERROR){
+            } else if (resultCode == RecognizerIntent.RESULT_SERVER_ERROR) {
                 showToastMessage("Server Error");
             }
+
+            //TODO: no message sent may be possible.
+        }
         super.onActivityResult(requestCode, resultCode, data);
     }
 

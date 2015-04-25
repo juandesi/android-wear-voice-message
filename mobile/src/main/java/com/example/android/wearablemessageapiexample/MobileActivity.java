@@ -40,7 +40,7 @@ public class MobileActivity extends Activity {
 
     private GoogleApiClient apiClient;
     private MessageApi.MessageListener messageListener;
-    private String command;
+    private RobotCommand.Command command;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,13 +88,18 @@ public class MobileActivity extends Activity {
             public void onMessageReceived(MessageEvent messageEvent) {
                 if (messageEvent.getPath().equals(COMMAND_PATH)) {
 
-                    command = new String(messageEvent.getData());
-                    HttpClient httpclient = new DefaultHttpClient();
+                    RobotCommand robotCommand = new RobotCommand(new String(messageEvent.getData()));
+                    command = robotCommand.getCommand();
 
-                    try {
-                        httpclient.execute(new HttpGet(BASE_URL + command));
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if(!command.equals(RobotCommand.Command.NoCommand)) {
+                        HttpClient httpclient = new DefaultHttpClient();
+                        try {
+                            httpclient.execute(new HttpGet(BASE_URL + command.name()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else{
+                        //TODO: NO DETECTED COMMAND
                     }
                 }
             }
