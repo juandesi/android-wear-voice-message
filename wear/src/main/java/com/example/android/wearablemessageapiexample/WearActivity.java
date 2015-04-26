@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -50,17 +51,17 @@ public class WearActivity extends Activity {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
     private GoogleApiClient apiClient;
     private String remoteNodeId;
-    private Button mbtSpeak, mbtRight, mbtLeft, mbtWalk;
+    private ImageButton mbtSpeak, mbtRight, mbtLeft, mbtWalk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        mbtSpeak = (Button) findViewById(R.id.btSpeak);
-        mbtLeft = (Button) findViewById(R.id.btLeftSpin);
-        mbtRight = (Button) findViewById(R.id.btRightSpin);
-        mbtWalk = (Button) findViewById(R.id.btWalk);
+        mbtSpeak = (ImageButton) findViewById(R.id.btSpeak);
+        mbtLeft = (ImageButton) findViewById(R.id.btLeftSpin);
+        mbtRight = (ImageButton) findViewById(R.id.btRightSpin);
+        mbtWalk = (ImageButton) findViewById(R.id.btWalk);
 
         apiClient = apiClientFactory();
         checkVoiceRecognition();
@@ -155,8 +156,6 @@ public class WearActivity extends Activity {
     void showToastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-
 
     @Override
     protected void onResume() {
