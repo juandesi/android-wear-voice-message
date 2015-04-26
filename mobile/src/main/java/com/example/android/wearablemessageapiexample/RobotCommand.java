@@ -3,7 +3,9 @@ package com.example.android.wearablemessageapiexample;
 
 import org.codehaus.plexus.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class RobotCommand {
@@ -30,30 +32,28 @@ public class RobotCommand {
         NoCommand
     }
 
-    private Map<String, Command> referenceMap;
+    private static  Map<String, Command> referenceMap = createReferenceMap();
 
-    private Command command;
+    private List<Command> commands = new ArrayList<Command>();
 
     public RobotCommand(String voiceCommand){
 
-        createReferenceMap();
-
-        String[] voiceCommandArray = StringUtils.split(voiceCommand, "#");
-
+        String[] voiceCommandArray = StringUtils.split(voiceCommand, " ");
+        Command command;
         for (String word : voiceCommandArray) {
             command = matchStringWithMovement(word);
             if(command != Command.NoCommand){
-                break;
+                commands.add(command);
             }
         }
     }
 
-    private void createReferenceMap() {
-        referenceMap = new HashMap<String, Command>();
+    private static Map<String,Command> createReferenceMap() {
+        Map<String, Command> newReferenceMap = new HashMap<String, Command>();
 
-        referenceMap.put("golpe;trompada;puño;mano;pegar;golpear", Command.Front_Attack);
-        referenceMap.put("patada,pie,patear,pata,pierna", Command.Left_Kick);
-
+        newReferenceMap.put("golpe;trompada;puño;mano;pegar;golpear", Command.Front_Attack);
+        newReferenceMap.put("patada,pie,patear,pata,pierna", Command.Left_Kick);
+        return newReferenceMap;
     }
 
     private Command matchStringWithMovement(String word){
@@ -67,11 +67,18 @@ public class RobotCommand {
         return Command.NoCommand;
     }
 
-    public Command getCommand() {
-        return command;
+    public String getCommand() {
+        return buildCommand();
     }
 
-
+    private String buildCommand() {
+        String completeCommand = "";
+        for(Command command: commands){
+            completeCommand = completeCommand.concat(command.name() + "->");
+        }
+        completeCommand = completeCommand.substring(0,completeCommand.length()-2);
+        return  completeCommand;
+    }
 
 
 }
