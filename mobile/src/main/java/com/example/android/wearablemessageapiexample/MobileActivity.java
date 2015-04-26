@@ -28,19 +28,24 @@ import com.google.android.gms.wearable.MessageApi;
 import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 
+import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MobileActivity extends Activity {
-    private static final String BASE_URL = "http://hackaton.cloudhub.io/addMovement?name=";
+    private static final String BASE_URL = "http://hackaton.cloudhub.io/addMovement";
     private final String COMMAND_PATH = "/command";
 
     private GoogleApiClient apiClient;
     private MessageApi.MessageListener messageListener;
-    private RobotCommand.Command command;
+    private String command;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,10 +96,16 @@ public class MobileActivity extends Activity {
                     RobotCommand robotCommand = new RobotCommand(new String(messageEvent.getData()));
                     command = robotCommand.getCommand();
 
-                    if(!command.equals(RobotCommand.Command.NoCommand)) {
+                    if(!command.isEmpty()) {
+                        StringBuilder requestUrl = new StringBuilder(BASE_URL);
+                        List<NameValuePair> params = new ArrayList<NameValuePair>();
+                        params.add(new BasicNameValuePair("name",command));
+                        String queryString = URLEncodedUtils.format(params, "utf-8");
+                        requestUrl.append("?");
+                        requestUrl.append(queryString);
                         HttpClient httpclient = new DefaultHttpClient();
                         try {
-                            httpclient.execute(new HttpGet(BASE_URL + command.name()));
+                            httpclient.execute(new HttpGet(requestUrl.toString()));
                         } catch (IOException e) {
                             e.printStackTrace();
                         }

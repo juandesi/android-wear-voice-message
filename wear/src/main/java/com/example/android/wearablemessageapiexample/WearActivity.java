@@ -43,8 +43,8 @@ import java.util.List;
 
 public class WearActivity extends Activity {
 
-    private final String RIGHT_SPIN_MOVE = "Right_Turn(2)";
-    private final String LEFT_SPIN_MOVE = "Left_Turn(2)";
+    private final String RIGHT_SPIN_MOVE = "Right_Turn";
+    private final String LEFT_SPIN_MOVE = "Left_Turn";
     private final String WALK_MOVE = "Advance";
 
     private final String COMMAND_PATH = "/command";
