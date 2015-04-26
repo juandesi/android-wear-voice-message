@@ -12,8 +12,10 @@ public class RobotCommand {
 
     public enum Command {
         Greet2,
+        Left_Turn,
+        Right_Turn,
+        Advance,
         Right_Jab,
-        Right_Hook,
         Left_Jab,
         Left_Hook,
         Left_Uppercut,
@@ -29,6 +31,12 @@ public class RobotCommand {
         Right_Kick,
         Left_Side_Kick,
         Horse_Dance,
+        Sit,
+        Right_Hook,
+        Get_Up,
+        Stand_Up,
+        Greet1,
+        Block_1,
         NoCommand
     }
 
@@ -46,14 +54,7 @@ public class RobotCommand {
 
     private List<Command> commands = new ArrayList<Command>();
 
-    private String buttonCommand = "";
-
     public RobotCommand(String voiceCommand){
-
-        if (buttonMovements.contains(voiceCommand))
-        {
-            buttonCommand = voiceCommand;
-        }
         String[] voiceCommandArray = StringUtils.split(voiceCommand, " ");
         Command command;
 
@@ -68,8 +69,17 @@ public class RobotCommand {
     private static Map<String,Command> createReferenceMap() {
         Map<String, Command> newReferenceMap = new HashMap<String, Command>();
 
-        newReferenceMap.put("golpe;trompada;puño;mano;pegar;golpear", Command.Front_Attack);
+        newReferenceMap.put("golpe;trompada;puño;piña;mano;pegar;golpear", Command.Front_Attack);
         newReferenceMap.put("patada,pie,patear,pata,pierna", Command.Left_Kick);
+        newReferenceMap.put("sentado;sentarse;sentar;sientate", Command.Sit);
+        newReferenceMap.put("parar;pararse;parate", Command.Stand_Up);
+        newReferenceMap.put("levantar;levantarse", Command.Get_Up);
+        newReferenceMap.put("saludar",Command.Greet1);
+        newReferenceMap.put("hola,chau",Command.Right_Hand_Wave);
+        newReferenceMap.put("bailar,baile,danza",Command.Horse_Dance);
+        newReferenceMap.put("bloquear",Command.Block_1);
+        newReferenceMap.put("gancho",Command.Right_Hook);
+
         return newReferenceMap;
     }
 
@@ -93,9 +103,6 @@ public class RobotCommand {
     }
 
     private String buildCommand() {
-        if (!buttonCommand.isEmpty()){
-            return buttonCommand;
-        }
         String completeCommand = "";
         for(Command command: commands){
             completeCommand = completeCommand.concat(command.name() + "->");
