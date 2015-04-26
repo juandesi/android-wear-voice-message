@@ -15,54 +15,61 @@
 -->
 
 
-<FrameLayout
-    android:layout_width="match_parent"
+<RelativeLayout
+    android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/darwinbg"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <Button
+    <ImageButton
         android:id="@+id/btSpeak"
-        android:layout_height="28dp"
         android:onClick="speak"
-        android:background="@drawable/punch"
-        android:layout_width="52dp"
+        android:src="@drawable/punch"
+        android:background="@color/white"
         tools:context=".VoiceRecognitionActivity"
-        android:layout_marginBottom="27dp"
-        android:layout_gravity="center_horizontal|bottom" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_below="@+id/btWalk"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
-    <Button
-        android:layout_width="34dp"
-        android:layout_height="32dp"
-        android:background="@drawable/walk"
-        android:id="@+id/btWalk"
-        android:onClick="walkMove"
-        android:width="24dp"
-        android:height="24dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="27dp"
-        />
-
-    <Button
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:background="@drawable/right"
-        android:id="@+id/btRightSpin"
-        android:onClick="rightSpinMove"
-        android:layout_marginEnd="25dp"
-        android:layout_gravity="right|center_vertical" />
-
-    <Button
-        android:layout_width="41dp"
-        android:layout_height="34dp"
-        android:background="@drawable/left"
+    <ImageButton
+        android:src="@drawable/left"
+        android:background="@color/white"
         android:id="@+id/btLeftSpin"
         android:onClick="leftSpinMove"
-        android:layout_marginStart="24dp"
-        android:layout_gravity="left|center_vertical" />
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_gravity="left|center_vertical"
+        android:layout_above="@+id/btSpeak"
+        android:layout_toStartOf="@+id/btSpeak" />
+
+    <ImageButton
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/right"
+        android:background="@color/white"
+        android:id="@+id/btRightSpin"
+        android:onClick="rightSpinMove"
+        android:layout_gravity="right|center_vertical"
+        android:layout_above="@+id/btSpeak"
+        android:layout_toEndOf="@+id/btSpeak" />
+
+    <ImageButton
+        android:src="@drawable/walk"
+        android:id="@+id/btWalk"
+        android:onClick="walkMove"
+        android:background="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
 
 
-</FrameLayout>
+</RelativeLayout>
 

@@ -17,16 +17,15 @@
 package com.example.android.wearablemessageapiexample;
 
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -50,22 +49,19 @@ public class WearActivity extends Activity {
 
     private final String COMMAND_PATH = "/command";
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
-
     private GoogleApiClient apiClient;
     private String remoteNodeId;
-    private EditText metTextHint;
-    private Button mbtSpeak, mbtRight, mbtLeft, mbtWalk;
+    private ImageButton mbtSpeak, mbtRight, mbtLeft, mbtWalk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        metTextHint = (EditText) findViewById(R.id.etTextHint);
-        mbtSpeak = (Button) findViewById(R.id.btSpeak);
-        mbtLeft = (Button) findViewById(R.id.btLeftSpin);
-        mbtRight = (Button) findViewById(R.id.btRightSpin);
-        mbtWalk = (Button) findViewById(R.id.btWalk);
+        mbtSpeak = (ImageButton) findViewById(R.id.btSpeak);
+        mbtLeft = (ImageButton) findViewById(R.id.btLeftSpin);
+        mbtRight = (ImageButton) findViewById(R.id.btRightSpin);
+        mbtWalk = (ImageButton) findViewById(R.id.btWalk);
 
         apiClient = apiClientFactory();
         checkVoiceRecognition();
@@ -88,10 +84,6 @@ public class WearActivity extends Activity {
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getClass()
                 .getPackage().getName());
 
-        // Display an hint to the user about what he should say.
-        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, metTextHint.getText()
-                .toString());
-
         // Given an hint to the recognizer about what the user is going to say
         //There are two form of language model available
         //1.LANGUAGE_MODEL_WEB_SEARCH : For short phrases
@@ -107,15 +99,24 @@ public class WearActivity extends Activity {
     }
 
     public void rightSpinMove(View view) {
-        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, RIGHT_SPIN_MOVE.getBytes());
+        new SendMessage().execute(RIGHT_SPIN_MOVE);
     }
 
     public void leftSpinMove(View view) {
-        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, LEFT_SPIN_MOVE.getBytes());
+        new SendMessage().execute(LEFT_SPIN_MOVE);
     }
 
     public void walkMove(View view) {
-        Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, WALK_MOVE.getBytes());
+        new SendMessage().execute(WALK_MOVE);
+    }
+
+    private class SendMessage extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... params) {
+            Wearable.MessageApi.sendMessage(apiClient, remoteNodeId, COMMAND_PATH, params[0].getBytes());
+            return null;
+        }
     }
 
     @Override
@@ -155,8 +156,6 @@ public class WearActivity extends Activity {
     void showToastMessage(String message){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
-
-
 
     @Override
     protected void onResume() {
