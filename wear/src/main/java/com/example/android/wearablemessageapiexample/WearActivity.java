@@ -54,7 +54,7 @@ public class WearActivity extends Activity {
     private GoogleApiClient apiClient;
     private String remoteNodeId;
     private EditText metTextHint;
-    private ImageButton mbtSpeak, mbtRight, mbtLeft, mbtWalk;
+    private Button mbtSpeak, mbtRight, mbtLeft, mbtWalk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,10 +62,10 @@ public class WearActivity extends Activity {
         setContentView(R.layout.main_activity);
 
         metTextHint = (EditText) findViewById(R.id.etTextHint);
-        mbtSpeak = (ImageButton) findViewById(R.id.btSpeak);
-        mbtLeft = (ImageButton) findViewById(R.id.btLeftSpin);
-        mbtRight = (ImageButton) findViewById(R.id.btRightSpin);
-        mbtWalk = (ImageButton) findViewById(R.id.btWalk);
+        mbtSpeak = (Button) findViewById(R.id.btSpeak);
+        mbtLeft = (Button) findViewById(R.id.btLeftSpin);
+        mbtRight = (Button) findViewById(R.id.btRightSpin);
+        mbtWalk = (Button) findViewById(R.id.btWalk);
 
         apiClient = apiClientFactory();
         checkVoiceRecognition();
