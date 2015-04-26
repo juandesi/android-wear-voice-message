@@ -32,14 +32,31 @@ public class RobotCommand {
         NoCommand
     }
 
+    private static List<String> buttonMovements = createButtonMovements();
+
+    private static List<String> createButtonMovements() {
+        List<String> movementList = new  ArrayList<String>();
+        movementList.add("Left_Turn(2)");
+        movementList.add("Right_Turn(2)");
+        movementList.add("Advance");
+        return movementList;
+    }
+
     private static  Map<String, Command> referenceMap = createReferenceMap();
 
     private List<Command> commands = new ArrayList<Command>();
 
+    private String buttonCommand = "";
+
     public RobotCommand(String voiceCommand){
 
+        if (buttonMovements.contains(voiceCommand))
+        {
+            buttonCommand = voiceCommand;
+        }
         String[] voiceCommandArray = StringUtils.split(voiceCommand, " ");
         Command command;
+
         for (String word : voiceCommandArray) {
             command = matchStringWithMovement(word);
             if(command != Command.NoCommand){
@@ -63,7 +80,11 @@ public class RobotCommand {
                 return referenceMap.get(key);
             }
         }
-
+        for (Command command : Command.values()) {
+            if(command.name().equals(word)){
+                return command;
+            }
+        }
         return Command.NoCommand;
     }
 
@@ -72,11 +93,16 @@ public class RobotCommand {
     }
 
     private String buildCommand() {
+        if (!buttonCommand.isEmpty()){
+            return buttonCommand;
+        }
         String completeCommand = "";
         for(Command command: commands){
             completeCommand = completeCommand.concat(command.name() + "->");
         }
-        completeCommand = completeCommand.substring(0,completeCommand.length()-2);
+        if (!completeCommand.isEmpty()) {
+            completeCommand = completeCommand.substring(0, completeCommand.length() - 2);
+        }
         return  completeCommand;
     }
 
