@@ -78,7 +78,7 @@
         android:layout_height="32dp"
         android:src="@drawable/right_walk_selector"
         android:background="@color/white"
-        android:id="@+id/imageButton"
+        android:id="@+id/btRightWalk"
         android:onClick="rightWalkMove"
         android:layout_gravity="right|center_vertical"
         android:layout_alignTop="@+id/btSpeak"
@@ -90,13 +90,13 @@
         android:layout_height="32dp"
         android:src="@drawable/left_walk_selector"
         android:background="@color/white"
-        android:id="@+id/imageButton2"
+        android:id="@+id/btLeftWalk"
         android:onClick="leftWalkMove"
         android:layout_gravity="right|center_vertical"
         android:layout_alignTop="@+id/btSpeak"
         android:layout_alignParentStart="true"
         android:layout_toStartOf="@+id/btSpeak"
-        android:layout_alignBottom="@+id/imageButton" />
+        android:layout_alignBottom="@+id/btRightWalk" />
 
 
 </RelativeLayout>
