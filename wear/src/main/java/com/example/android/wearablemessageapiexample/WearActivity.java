@@ -46,6 +46,8 @@ public class WearActivity extends Activity {
     private final String RIGHT_SPIN_MOVE = "Right_Turn";
     private final String LEFT_SPIN_MOVE = "Left_Turn";
     private final String WALK_MOVE = "Advance";
+    private final String RIGHT_MOVE = "Sidestep_Right";
+    private final String LEFT_MOVE = "Sidestep_Left";
 
     private final String COMMAND_PATH = "/command";
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
@@ -110,6 +112,17 @@ public class WearActivity extends Activity {
         new SendMessage().execute(WALK_MOVE);
     }
 
+    public void leftWalkMove(View view) {
+        new SendMessage().execute(LEFT_MOVE);
+    }
+
+    public void rightWalkMove(View view) {
+        new SendMessage().execute(RIGHT_MOVE);
+    }
+
+    /**
+     * Allows the app to send asyncronic messages and no blocking the UI thread
+     */
     private class SendMessage extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -185,7 +198,9 @@ public class WearActivity extends Activity {
         super.onPause();
     }
 
-    // Create GoogleApiClient
+    /**
+     * Create GoogleApiClient
+     */
     private GoogleApiClient apiClientFactory() {
         return new GoogleApiClient.Builder(getApplicationContext()).addConnectionCallbacks(new GoogleApiClient.ConnectionCallbacks() {
             @Override
