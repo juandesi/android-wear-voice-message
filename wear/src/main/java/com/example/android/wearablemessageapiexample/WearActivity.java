@@ -53,7 +53,7 @@ public class WearActivity extends Activity {
     private static final int VOICE_RECOGNITION_REQUEST_CODE = 1001;
     private GoogleApiClient apiClient;
     private String remoteNodeId;
-    private ImageButton mbtSpeak, mbtRight, mbtLeft, mbtWalk;
+    private ImageButton mbtSpeak, mbtRight, mbtLeft, mbtWalk, mbtRightSidewalk, mbtLeftSidewalk;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,8 @@ public class WearActivity extends Activity {
         mbtLeft = (ImageButton) findViewById(R.id.btLeftSpin);
         mbtRight = (ImageButton) findViewById(R.id.btRightSpin);
         mbtWalk = (ImageButton) findViewById(R.id.btWalk);
+        mbtRightSidewalk = (ImageButton) findViewById(R.id.btRightWalk);
+        mbtLeftSidewalk = (ImageButton) findViewById(R.id.btLeftWalk);
 
         apiClient = apiClientFactory();
         checkVoiceRecognition();
