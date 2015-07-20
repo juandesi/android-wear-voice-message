@@ -12,6 +12,8 @@ public class RobotCommand {
 
     public enum Command {
         Greet2,
+        Sidestep_Right,
+        Sidestep_Left,
         Left_Turn,
         Right_Turn,
         Advance,
@@ -58,35 +60,79 @@ public class RobotCommand {
         String[] voiceCommandArray = StringUtils.split(voiceCommand, " ");
         Command command;
 
-        for (String word : voiceCommandArray) {
-            command = matchStringWithMovement(word);
-            if(command != Command.NoCommand){
-                commands.add(command);
+        int size = voiceCommandArray.length;
+        int i = 0;
+
+        while (size != i) {
+            try {
+                command = matchStringWithMovement(voiceCommandArray[i], voiceCommandArray[i + 1]);
+                if (command != Command.NoCommand) {
+                    commands.add(command);
+                    i++;
+                }
+            } catch (IndexOutOfBoundsException e) {
+                command = matchStringWithMovement(voiceCommandArray[i]);
+                if (command != Command.NoCommand) {
+                    commands.add(command);
+                }
+
+            } finally {
+                i++;
             }
         }
+
+//        for (String word : voiceCommandArray) {
+//            command = matchStringWithMovement(word);
+//            if(command != Command.NoCommand){
+//                commands.add(command);
+//            }
+//        }
     }
+
 
     private static Map<String,Command> createReferenceMap() {
         Map<String, Command> newReferenceMap = new HashMap<String, Command>();
 
-        newReferenceMap.put("golpe;trompada;puño;piña;mano;pegar;golpear", Command.Front_Attack);
-        newReferenceMap.put("patada,pie,patear,pata,pierna", Command.Left_Kick);
-        newReferenceMap.put("sentado;sentarse;sentar;sientate", Command.Sit);
-        newReferenceMap.put("parar;pararse;parate", Command.Stand_Up);
-        newReferenceMap.put("levantar;levantarse", Command.Get_Up);
-        newReferenceMap.put("saludar",Command.Greet1);
-        newReferenceMap.put("hola,chau",Command.Right_Hand_Wave);
-        newReferenceMap.put("bailar,baile,danza",Command.Horse_Dance);
-        newReferenceMap.put("bloquear",Command.Block_1);
-        newReferenceMap.put("gancho",Command.Right_Hook);
+        newReferenceMap.put("attack", Command.Front_Attack);
+        newReferenceMap.put("back roll", Command.Back_Roll);
+        newReferenceMap.put("left sidestep", Command.Sidestep_Left);
+        newReferenceMap.put("right sidestep", Command.Sidestep_Right);
+        newReferenceMap.put("right kick", Command.Right_Kick);
+        newReferenceMap.put("left kick", Command.Left_Kick);
+        newReferenceMap.put("sit", Command.Sit);
+        newReferenceMap.put("stand up", Command.Stand_Up);
+        newReferenceMap.put("get up", Command.Get_Up);
+        newReferenceMap.put("greet",Command.Greet1);
+        newReferenceMap.put("hi,hello,bye",Command.Right_Hand_Wave);
+        newReferenceMap.put("dance",Command.Horse_Dance);
+        newReferenceMap.put("block",Command.Block_1);
+        newReferenceMap.put("right hook",Command.Right_Hook);
 
         return newReferenceMap;
+    }
+
+    private Command matchStringWithMovement(String word1, String word2){
+
+        for (String key : referenceMap.keySet()) {
+            if(key.contains(word1 + " " + word2)){
+                return referenceMap.get(key);
+            }
+            if(key.contains(word1) && !key.contains(" ")){
+                return referenceMap.get(key);
+            }
+        }
+        for (Command command : Command.values()) {
+            if(command.name().equals(word1)){
+                return command;
+            }
+        }
+        return Command.NoCommand;
     }
 
     private Command matchStringWithMovement(String word){
 
         for (String key : referenceMap.keySet()) {
-            if(key.contains(word)){
+            if(key.contains(word) && !key.contains(" ")){
                 return referenceMap.get(key);
             }
         }

@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MobileActivity extends Activity {
-    private static final String BASE_URL = "http://hackaton.cloudhub.io/addMovement";
+    private static final String BASE_URL = "http://battlebots-connect.cloudhub.io/addMovement";
     private final String COMMAND_PATH = "/command";
 
     private GoogleApiClient apiClient;
@@ -100,6 +100,7 @@ public class MobileActivity extends Activity {
                         StringBuilder requestUrl = new StringBuilder(BASE_URL);
                         List<NameValuePair> params = new ArrayList<NameValuePair>();
                         params.add(new BasicNameValuePair("name",command));
+                        params.add(new BasicNameValuePair("queue","1"));
                         String queryString = URLEncodedUtils.format(params, "utf-8");
                         requestUrl.append("?");
                         requestUrl.append(queryString);
